@@ -3,10 +3,12 @@ import { internalPath } from '../lib/paths';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 const { currentPath = '' } = Astro.props;
 const { lang = 'es' } = Astro.props;
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const routePath = basePath && currentPath.startsWith(basePath) ? currentPath.slice(basePath.length) || '/' : currentPath;
 const links = lang === 'en' ? [['Home','/en'],['Courses','/en/courses'],['Experience','/en/about'],['Contact','/en/contact']] : [['Inicio','/'],['Cursos','/courses'],['Experiencia','/about'],['Contacto','/contact']];
 ---
 <header class="no-print">
-  <div class="container nav"><div class="brand-space"></div><nav id="primary-navigation">{links.map(([label,href]) => <a class:list={{active: currentPath === href}} href={internalPath(href)}>{label}</a>)}</nav><div class="nav-actions"><LanguageSwitcher {lang} {currentPath}/><a class="nav-cta" href={internalPath(lang === 'en' ? '/en/contact' : '/contact')}>{lang === 'en' ? "Let's talk" : 'Hablemos'}</a><button class="menu-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label={lang === 'en' ? 'Open menu' : 'Abrir menú'}><span></span><span></span><span></span></button></div></div>
+  <div class="container nav"><div class="brand-space"></div><nav id="primary-navigation">{links.map(([label,href]) => <a class:list={{active: routePath === href || `${routePath}/` === href}} href={internalPath(href)}>{label}</a>)}</nav><div class="nav-actions"><LanguageSwitcher {lang} currentPath={routePath}/><a class="nav-cta" href={internalPath(lang === 'en' ? '/en/contact' : '/contact')}>{lang === 'en' ? "Let's talk" : 'Hablemos'}</a><button class="menu-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label={lang === 'en' ? 'Open menu' : 'Abrir menú'}><span></span><span></span><span></span></button></div></div>
 <script>
   const menuButton = document.querySelector('.menu-toggle');
   const menu = document.querySelector('#primary-navigation');
