@@ -1,0 +1,6 @@
+---
+import { internalPath } from '../lib/paths';
+const { course } = Astro.props;
+---
+<article class="card course-card"><p class="eyebrow">{course.data.category}</p><h3><a href={internalPath(`/courses/${course.id}`)}>{course.data.title}</a></h3><p class="muted">{course.data.description}</p><p class="meta">{course.data.level} · {course.data.duration}</p><div>{course.data.tags.slice(0,3).map((tag) => <span class="tag">{tag}</span>)}</div><a class="more" href={internalPath(`/courses/${course.id}`)}>Ver ficha <span>→</span></a></article>
+<style>.course-card{display:flex;flex-direction:column;align-items:flex-start}.course-card h3{margin-bottom:10px}.course-card h3 a:hover{color:var(--blue)}.course-card .more{margin-top:20px;font-weight:700;color:var(--blue);font-size:.9rem}.more span{margin-left:3px}</style>
