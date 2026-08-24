@@ -3,7 +3,7 @@ title: Inteligencia Artificial para profesionales
 description: Qué es la IA hoy, cómo reconocer sus usos útiles y cómo valorar sus límites en la empresa.
 category: Inteligencia Artificial
 level: Inicial
-duration: 2–3 horas
+duration: 4 horas
 order: 9
 featured: true
 tags: [IA, Empresa, Casos de uso]

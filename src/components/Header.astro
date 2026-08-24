@@ -1,11 +1,12 @@
 ---
 import { internalPath } from '../lib/paths';
+import LanguageSwitcher from './LanguageSwitcher.astro';
 const { currentPath = '' } = Astro.props;
 const links = [['Inicio','/'],['Cursos','/courses'],['Experiencia','/about'],['Contacto','/contact']];
 ---
 <header class="no-print">
-  <div class="container nav"><a class="brand" href={internalPath()}>GB<span>·</span> Formación</a><nav>{links.map(([label,href]) => <a class:list={{active: currentPath === href}} href={internalPath(href)}>{label}</a>)}</nav><a class="nav-cta" href={internalPath('/contact')}>Hablemos</a></div>
+  <div class="container nav"><div class="brand-space"></div><nav>{links.map(([label,href]) => <a data-i18n={label} class:list={{active: currentPath === href}} href={internalPath(href)}>{label}</a>)}</nav><div class="nav-actions"><LanguageSwitcher/><a data-i18n="Hablemos" class="nav-cta" href={internalPath('/contact')}>Hablemos</a></div></div>
 </header>
 <style>
-header{background:rgba(246,248,251,.88);backdrop-filter:blur(12px);position:sticky;top:0;z-index:5;border-bottom:1px solid transparent}.nav{height:74px;display:flex;align-items:center;justify-content:space-between;gap:25px}.brand{font-family:Manrope,sans-serif;font-weight:800;letter-spacing:-.05em}.brand span{color:var(--blue)}nav{display:flex;gap:25px;color:var(--muted);font-size:.94rem;font-weight:600}nav a.active,nav a:hover{color:var(--blue)}.nav-cta{font-size:.87rem;font-weight:700;border:1px solid var(--line);padding:7px 12px;border-radius:7px}@media(max-width:650px){nav{display:none}.nav{height:62px}}
+header{background:rgba(246,248,251,.88);backdrop-filter:blur(12px);position:sticky;top:0;z-index:5;border-bottom:1px solid transparent}.nav{height:74px;display:flex;align-items:center;justify-content:space-between;gap:25px}.brand-space{width:105px}.nav-actions{display:flex;align-items:center;gap:14px;min-width:105px;justify-content:flex-end}nav{display:flex;gap:25px;color:var(--muted);font-size:.94rem;font-weight:600}nav a.active,nav a:hover{color:var(--blue)}.nav-cta{font-size:.87rem;font-weight:700;border:1px solid var(--line);padding:7px 12px;border-radius:7px}@media(max-width:650px){nav{display:none}.brand-space{display:none}.nav{height:62px;justify-content:flex-end}}
 </style>

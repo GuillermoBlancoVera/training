@@ -1,0 +1,22 @@
+<div class="language-switcher no-print" aria-label="Language selector">
+  <button type="button" data-language="es" class="active">ES</button><span>/</span><button type="button" data-language="en">EN</button>
+</div>
+<script>
+  const language = new URLSearchParams(location.search).get('lang') === 'en' ? 'en' : 'es';
+  document.documentElement.lang = language;
+  const translations = {
+    en: { Inicio: 'Home', Cursos: 'Courses', Experiencia: 'Experience', Contacto: 'Contact', Hablemos: "Let's talk" },
+  };
+  if (language === 'en') document.querySelectorAll('[data-i18n]').forEach((element) => {
+    const translation = translations.en[element.dataset.i18n]; if (translation) element.textContent = translation;
+  });
+  document.querySelectorAll('[data-language]').forEach((button) => {
+    button.classList.toggle('active', button.dataset.language === language);
+    button.addEventListener('click', () => {
+      const url = new URL(location.href); const next = button.dataset.language;
+      next === 'en' ? url.searchParams.set('lang', 'en') : url.searchParams.delete('lang');
+      location.href = url.toString();
+    });
+  });
+</script>
+<style>.language-switcher{display:flex;align-items:center;gap:4px;color:var(--muted);font-size:.75rem;font-weight:700}.language-switcher button{padding:2px;border:0;background:transparent;color:inherit;cursor:pointer;font:inherit}.language-switcher button.active{color:var(--blue)}</style>

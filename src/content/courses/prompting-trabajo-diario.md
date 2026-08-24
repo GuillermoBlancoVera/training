@@ -3,7 +3,7 @@ title: Prompting para el trabajo diario
 description: Técnicas sencillas y prácticas para pedir mejores resultados a herramientas de IA generativa.
 category: Inteligencia Artificial
 level: Inicial
-duration: 2–3 horas
+duration: 4 horas
 order: 11
 featured: false
 tags: [Prompting, Productividad, IA generativa]

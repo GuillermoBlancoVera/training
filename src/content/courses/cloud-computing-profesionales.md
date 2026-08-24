@@ -3,7 +3,7 @@ title: Cloud Computing para profesionales
 description: Una visión clara de los conceptos Cloud, sus modelos y cómo se aplican en organizaciones reales.
 category: Cloud & AWS
 level: Inicial
-duration: 2–3 horas
+duration: 4 horas
 order: 1
 featured: true
 tags: [Cloud, Estrategia, AWS]
