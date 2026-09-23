@@ -1,0 +1,21 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      # One pull request for minor/patch updates; majors (e.g. a new Astro) arrive separately.
+      minor-and-patch:
+        update-types: [minor, patch]
+    ignore:
+      # Stay on TypeScript 5 until @astrojs/check supports TypeScript 7.
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ['*']

@@ -67,7 +67,7 @@ const isActive = (href: string) => (href === '/' ? route === '/' : route === hre
 
 <style>
   header {
-    background: rgba(246, 248, 251, 0.88);
+    background: var(--header-bg);
     backdrop-filter: blur(12px);
     position: sticky;
     top: 0;
@@ -81,7 +81,7 @@ const isActive = (href: string) => (href === '/' ? route === '/' : route === hre
     gap: 25px;
   }
   .brand {
-    font-family: Manrope, 'DM Sans', sans-serif;
+    font-family: var(--font-heading);
     font-weight: 800;
     letter-spacing: -0.02em;
     white-space: nowrap;
@@ -116,7 +116,7 @@ const isActive = (href: string) => (href === '/' ? route === '/' : route === hre
     padding: 8px;
     border: 1px solid var(--line);
     border-radius: 7px;
-    background: #fff;
+    background: var(--paper);
     cursor: pointer;
   }
   .menu-toggle span {
