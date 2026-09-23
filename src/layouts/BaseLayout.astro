@@ -1,8 +1,69 @@
 ---
+import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { internalPath } from '../lib/paths';
-const { title = 'Guillermo Blanco Vera | Formación tecnológica', description = 'Cloud, AWS, programación e Inteligencia Artificial desde la experiencia práctica.', lang = 'es' } = Astro.props;
+import { languages, locales, ui, type Lang } from '../i18n/ui';
+import { internalPath, localizedPath, routeFromPathname } from '../lib/paths';
+
+interface Props {
+  lang: Lang;
+  /** Page name; the site name is appended. Omit on the home page. */
+  title?: string;
+  description?: string;
+  /** Hide the page from search engines (404). */
+  noindex?: boolean;
+}
+
+const { lang, title, description, noindex = false } = Astro.props;
+const t = ui[lang];
+const fullTitle = title ? `${title} | ${t.meta.siteName}` : t.meta.title;
+const metaDescription = description ?? t.meta.description;
+const route = routeFromPathname(Astro.url.pathname);
+const absolute = (path: string) => new URL(path, Astro.site ?? Astro.url).href;
+const canonical = absolute(localizedPath(lang, route));
+const ogImage = absolute(internalPath(lang === 'en' ? '/images/og-en.jpg' : '/images/og.jpg'));
 ---
-<!doctype html><html lang={lang}><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="description" content={description}/><link rel="icon" type="image/svg+xml" href={internalPath('/favicon.svg')}/><title>{title}</title></head><body><Header currentPath={Astro.url.pathname} {lang}/><main><slot /></main><Footer {lang}/></body></html>
-<style is:global>@import '../styles/global.css';</style>
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={metaDescription} />
+    <link rel="icon" type="image/svg+xml" href={internalPath('/favicon.svg')} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {!noindex && (
+      <>
+        <link rel="canonical" href={canonical} />
+        {languages.map((alt) => (
+          <link rel="alternate" hreflang={locales[alt].hreflang} href={absolute(localizedPath(alt, route))} />
+        ))}
+        <link rel="alternate" hreflang="x-default" href={absolute(localizedPath('es', route))} />
+      </>
+    )}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={t.meta.siteName} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={locales[lang].og} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+    />
+  </head>
+  <body>
+    <Header lang={lang} route={route} />
+    <main>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

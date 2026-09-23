@@ -1,8 +1,57 @@
 ---
-import { internalPath } from '../lib/paths';
-import { enCourses, categoryEn, levelEn } from '../i18n/en';
-const { course, lang = 'es' } = Astro.props;
-const en = lang === 'en'; const copy = enCourses[course.id];
+import { ui, type Lang } from '../i18n/ui';
+import { formatHours, type Course } from '../lib/courses';
+import { localizedPath } from '../lib/paths';
+
+interface Props {
+  course: Course;
+  lang: Lang;
+}
+
+const { course, lang } = Astro.props;
+const t = ui[lang];
+const href = localizedPath(lang, `/courses/${course.id}`);
 ---
-<article class="card course-card"><p class="eyebrow">{en ? categoryEn[course.data.category] : course.data.category}</p><h3><a href={internalPath(`${en ? '/en' : ''}/courses/${course.id}`)}>{en ? copy.title : course.data.title}</a></h3><p class="muted">{en ? copy.description : course.data.description}</p><p class="meta">{en ? levelEn[course.data.level] : course.data.level} · {en ? course.data.duration.replace('horas', 'hours').replace('hora', 'hour') : course.data.duration}</p><div>{course.data.tags.slice(0,3).map((tag) => <span class="tag">{tag}</span>)}</div><a class="more" href={internalPath(`${en ? '/en' : ''}/courses/${course.id}`)}>{en ? 'View course' : 'Ver ficha'} <span>→</span></a></article>
-<style>.course-card{display:flex;flex-direction:column;align-items:flex-start}.course-card h3{margin-bottom:10px}.course-card h3 a:hover{color:var(--blue)}.course-card .more{margin-top:20px;font-weight:700;color:var(--blue);font-size:.9rem}.more span{margin-left:3px}</style>
+
+<article class="card course-card">
+  <p class="eyebrow">{t.categories[course.data.category]}</p>
+  <h3>
+    <a href={href}>{course.data.title}</a>
+  </h3>
+  <p class="muted">{course.data.description}</p>
+  <p class="meta">
+    {t.levels[course.data.level]} · {formatHours(course.data.hours, t)}
+  </p>
+  <div>
+    {course.data.tags.slice(0, 3).map((tag) => (
+      <span class="tag">{tag}</span>
+    ))}
+  </div>
+  <a class="more" href={href} aria-hidden="true" tabindex="-1">
+    {t.courseCard.more} <span>→</span>
+  </a>
+</article>
+
+<style>
+  .course-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .course-card h3 {
+    margin-bottom: 10px;
+  }
+  .course-card h3 a:hover {
+    color: var(--blue);
+  }
+  .more {
+    margin-top: auto;
+    padding-top: 20px;
+    font-weight: 700;
+    color: var(--blue);
+    font-size: 0.9rem;
+  }
+  .more span {
+    margin-left: 3px;
+  }
+</style>

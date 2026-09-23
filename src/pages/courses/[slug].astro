@@ -1,0 +1,15 @@
+---
+import type { GetStaticPaths } from 'astro';
+import CoursePage from '../../views/CoursePage.astro';
+import { getCourses } from '../../lib/courses';
+
+export const getStaticPaths = (async () =>
+  (await getCourses('es')).map((course) => ({
+    params: { slug: course.id },
+    props: { course },
+  }))) satisfies GetStaticPaths;
+
+const { course } = Astro.props;
+---
+
+<CoursePage lang="es" course={course} />

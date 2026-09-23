@@ -1,4 +1,5 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactPage from '../../views/ContactPage.astro';
 ---
-<BaseLayout lang="en" title="Contact | Guillermo Blanco Vera"><section class="contact"><div class="container"><p class="eyebrow">Contact</p><h1>Let's talk about the training your team needs.</h1><p class="lead">Courses can be adapted in duration, level and content. You can email me directly or connect with me on LinkedIn.</p><div class="contact-grid"><article class="card"><h3>Email</h3><p><a href="mailto:guillermoblancovera@gmail.com">guillermoblancovera@gmail.com</a></p></article><article class="card"><h3>LinkedIn</h3><p class="muted">Professional profile and career.</p><a class="button secondary" href="https://www.linkedin.com/in/guillermo-blanco-vera/" target="_blank" rel="noreferrer">View LinkedIn profile</a></article></div></div></section></BaseLayout><style>.contact{padding:120px 0;min-height:70vh;background:linear-gradient(120deg,#f6f8fb 45%,#e8f0fc)}.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:45px;max-width:850px}.contact-grid a:not(.button){color:var(--blue);font-weight:700;font-size:1.05rem}.contact-grid .button{margin-top:12px}@media(max-width:720px){.contact{padding:75px 0}.contact-grid{grid-template-columns:1fr}}</style>
+
+<ContactPage lang="en" />
