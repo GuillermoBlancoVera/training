@@ -1,10 +1,10 @@
 ---
 title: Arquitecturas Serverless en AWS
 description: Patrones, decisiones y buenas prácticas para sistemas orientados a eventos en AWS.
-category: cloud
+track: technical
 level: intermediate
 hours: [4, 6]
-order: 4
+order: 12
 featured: false
 tags: [Serverless, EventBridge, Observabilidad]
 audience: [Desarrolladores backend, Arquitectos junior, Equipos AWS]

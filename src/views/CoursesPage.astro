@@ -4,7 +4,7 @@ import CourseCard from '../components/CourseCard.astro';
 import { learningPaths, ui, type Lang } from '../i18n/ui';
 import { getCourses } from '../lib/courses';
 import { localizedPath } from '../lib/paths';
-import { categories } from '../lib/taxonomy';
+import { tracks } from '../lib/taxonomy';
 
 interface Props {
   lang: Lang;
@@ -15,11 +15,13 @@ const t = ui[lang];
 const courses = await getCourses(lang);
 const paths = learningPaths.map((ids, i) => {
   const [title, text] = t.catalogue.paths[i];
-  const steps = ids.map((id) => {
+  const find = (id: string) => {
     const course = courses.find((c) => c.id === id);
     if (!course) throw new Error(`Learning path ${i + 1} references unknown course "${id}".`);
     return course;
-  });
+  };
+  // Each step is a list of alternatives; most steps have exactly one course.
+  const steps = ids.map((step) => (Array.isArray(step) ? step : [step]).map(find));
   return { title, text, steps };
 });
 ---
@@ -39,18 +41,19 @@ const paths = learningPaths.map((ids, i) => {
         <button type="button" data-filter="all" aria-pressed="true">
           {t.catalogue.all}
         </button>
-        {categories.map((category) => (
-          <button type="button" data-filter={category} aria-pressed="false">
-            {t.categories[category]}
+        {tracks.map((track) => (
+          <button type="button" data-filter={track} aria-pressed="false">
+            {t.tracks[track].name}
           </button>
         ))}
       </div>
-      {categories.map((category) => (
-        <section class="course-group" data-category={category}>
-          <h2 class="eyebrow">{t.categories[category]}</h2>
+      {tracks.map((track) => (
+        <section class="course-group" id={track} data-track={track}>
+          <h2>{t.tracks[track].name}</h2>
+          <p class="muted track-text">{t.tracks[track].text}</p>
           <div class="grid grid-3">
             {courses
-              .filter((course) => course.data.category === category)
+              .filter((course) => course.data.track === track)
               .map((course) => (
                 <CourseCard course={course} lang={lang} />
               ))}
@@ -64,15 +67,22 @@ const paths = learningPaths.map((ids, i) => {
     <div class="container">
       <p class="eyebrow">{t.catalogue.pathsEyebrow}</p>
       <h2>{t.catalogue.pathsHeading}</h2>
-      <div class="grid grid-3">
+      <div class="grid grid-2">
         {paths.map((path) => (
           <article class="card">
             <h3>{path.title}</h3>
             <p class="muted">{path.text}</p>
             <ol class="path-courses">
-              {path.steps.map((course) => (
+              {path.steps.map((options) => (
                 <li>
-                  <a href={localizedPath(lang, `/courses/${course.id}`)}>{course.data.title}</a>
+                  <span class="step-options">
+                    {options.map((course, j) => (
+                      <>
+                        {j > 0 && <span class="step-or">{t.catalogue.pathOr}</span>}
+                        <a href={localizedPath(lang, `/courses/${course.id}`)}>{course.data.title}</a>
+                      </>
+                    ))}
+                  </span>
                 </li>
               ))}
             </ol>
@@ -92,7 +102,7 @@ const paths = learningPaths.map((ids, i) => {
     button.addEventListener('click', () => {
       const filter = button.dataset.filter;
       buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
-      groups.forEach((group) => (group.hidden = filter !== 'all' && group.dataset.category !== filter));
+      groups.forEach((group) => (group.hidden = filter !== 'all' && group.dataset.track !== filter));
     }),
   );
 </script>
@@ -133,13 +143,18 @@ const paths = learningPaths.map((ids, i) => {
   .course-group[hidden] {
     display: none;
   }
-  .course-group > .eyebrow {
-    font-family: inherit;
-    font-size: 0.78rem;
-    letter-spacing: 0.11em;
-    line-height: 1.6;
+  .course-group {
+    scroll-margin-top: 90px;
+  }
+  .course-group > h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    margin-bottom: 8px;
+  }
+  .track-text {
+    max-width: 690px;
     border-bottom: 1px solid var(--line);
-    padding-bottom: 12px;
+    padding-bottom: 18px;
+    margin-bottom: 24px;
   }
   .learning-paths {
     background: var(--surface);
@@ -180,8 +195,19 @@ const paths = learningPaths.map((ids, i) => {
     color: var(--paper);
     font-size: 0.75rem;
   }
-  .path-courses a {
+  .step-options {
     flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+  .step-or {
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .path-courses a {
+    flex: 1 1 140px;
     padding: 8px 10px;
     background: var(--paper);
     border: 1px solid var(--line-strong);

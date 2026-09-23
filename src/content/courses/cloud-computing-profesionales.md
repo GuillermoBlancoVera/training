@@ -1,11 +1,11 @@
 ---
-title: Cloud Computing para profesionales
+title: Cloud explicado para equipos de negocio
 description: Una visión clara de los conceptos Cloud, sus modelos y cómo se aplican en organizaciones reales.
-category: cloud
+track: business
 level: beginner
 hours: 4
-order: 1
-featured: true
+order: 4
+featured: false
 tags: [Cloud, Estrategia, AWS]
 audience: [Managers y Product Owners, Equipos de negocio, Profesionales que colaboran con tecnología]
 prerequisites: No son necesarios conocimientos técnicos previos.

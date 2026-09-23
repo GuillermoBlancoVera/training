@@ -14,7 +14,7 @@ const href = localizedPath(lang, `/courses/${course.id}`);
 ---
 
 <article class="card course-card">
-  <p class="eyebrow">{t.categories[course.data.category]}</p>
+  <p class="eyebrow">{t.tracks[course.data.track].name}</p>
   <h3>
     <a href={href}>{course.data.title}</a>
   </h3>

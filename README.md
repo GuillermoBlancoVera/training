@@ -16,7 +16,7 @@ Requiere Node 22.12 o superior.
 
 ## Estructura
 
-- `src/content/courses/*.md` — cursos en español. Contienen también los datos comunes (categoría, nivel, horas, orden, destacado).
+- `src/content/courses/*.md` — cursos en español. Contienen también los datos comunes (público, nivel, horas, orden, destacado).
 - `src/content/courses-en/*.md` — traducción al inglés de cada curso, con el **mismo nombre de archivo**.
 - `src/i18n/ui.ts` — todos los textos de la interfaz en ambos idiomas, datos de contacto e itinerarios de aprendizaje.
 - `src/views/` — una vista por tipo de página, compartida por los dos idiomas.
@@ -24,7 +24,9 @@ Requiere Node 22.12 o superior.
 
 ## Añadir un curso
 
-1. Crea `src/content/courses/<id>.md` copiando uno existente. Valores válidos: `category` (`cloud`, `programming`, `ai`), `level` (`beginner`, `beginner-intermediate`, `intermediate`), `hours` (`4` o `[6, 8]`).
+1. Crea `src/content/courses/<id>.md` copiando uno existente. Valores válidos: `track` (`business`: para cualquier profesional, sin conocimientos técnicos; `technical`: para equipos técnicos), `level` (`beginner`, `beginner-intermediate`, `intermediate`), `hours` (`4` o `[6, 8]`).
 2. Crea `src/content/courses-en/<id>.md` con la traducción.
 
 Si falta la traducción o un campo, el build falla indicando qué archivo corregir.
+
+Si eliminas o renombras un curso, añádelo a `retiredCourses` en `astro.config.mjs` para que los enlaces antiguos redirijan.

@@ -1,5 +1,5 @@
 ---
-title: Cloud Computing for professionals
+title: Cloud explained for business teams
 description: A clear view of Cloud concepts, service models and how they are used in real organisations.
 tags: [Cloud, Strategy, AWS]
 audience: [Managers and Product Owners, Business teams, Professionals who work alongside technology teams]

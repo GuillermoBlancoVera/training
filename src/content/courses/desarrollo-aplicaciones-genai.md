@@ -1,10 +1,10 @@
 ---
 title: Desarrollo de aplicaciones con IA generativa
 description: Patrones técnicos para construir aplicaciones GenAI útiles, evaluables y preparadas para producción.
-category: ai
+track: technical
 level: intermediate
 hours: [6, 8]
-order: 13
+order: 16
 featured: false
 tags: [RAG, Agentes, Arquitectura]
 audience: [Desarrolladores, Tech Leads, Equipos de producto técnico]

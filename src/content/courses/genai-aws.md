@@ -1,11 +1,11 @@
 ---
-title: Inteligencia Artificial y Generative AI en AWS
-description: Una visión práctica y actualizable de los servicios de IA de AWS y su integración responsable en aplicaciones.
-category: ai
+title: IA generativa en AWS con Amazon Bedrock
+description: Una visión práctica y actualizable de la IA generativa en AWS y de su integración responsable en aplicaciones.
+track: technical
 level: beginner-intermediate
 hours: [4, 6]
-order: 12
-featured: true
+order: 15
+featured: false
 tags: [Amazon Bedrock, AWS, GenAI]
 audience: [Equipos técnicos, Arquitectos junior, Responsables de producto]
 prerequisites: Nociones de Cloud y APIs; el nivel técnico se puede ajustar.
@@ -15,13 +15,13 @@ adaptation: El temario se actualiza periódicamente y se adapta a los servicios 
 
 ## Objetivos
 
-- Conocer el ecosistema de IA de AWS sin depender de un único servicio.
+- Conocer el ecosistema de IA generativa de AWS sin depender de un único servicio.
 - Diseñar integraciones de GenAI con seguridad, costes y evaluación en mente.
 
 ## Temario
 
 - Foundation Models y Amazon Bedrock
-- Amazon Q, SageMaker y servicios de IA de AWS
+- Amazon Q y cuándo recurrir a SageMaker
 - Embeddings, RAG, Knowledge Bases y Agents
 - Guardrails, IAM, privacidad y costes
 - Integración con aplicaciones y casos prácticos

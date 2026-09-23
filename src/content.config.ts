@@ -1,7 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
-import { categories, levels } from './lib/taxonomy';
+import { levels, tracks } from './lib/taxonomy';
 
 /** Fields written in each language. */
 const translatedFields = z.object({
@@ -18,7 +18,7 @@ const translatedFields = z.object({
 const courses = defineCollection({
   loader: glob({ base: './src/content/courses', pattern: '*.md' }),
   schema: translatedFields.extend({
-    category: z.enum(categories),
+    track: z.enum(tracks),
     level: z.enum(levels),
     /** Hours, either fixed (4) or a range ([6, 8]). */
     hours: z.union([z.number().positive(), z.tuple([z.number().positive(), z.number().positive()])]),
