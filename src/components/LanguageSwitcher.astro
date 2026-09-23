@@ -1,7 +1,51 @@
 ---
-import { internalPath } from '../lib/paths';
-const { lang = 'es', currentPath = '/' } = Astro.props;
-const localPath = currentPath.replace(/^\/en(?=\/|$)/, '') || '/';
+import { ui, type Lang } from '../i18n/ui';
+import { localizedPath } from '../lib/paths';
+
+interface Props {
+  lang: Lang;
+  route: string;
+}
+
+const { lang, route } = Astro.props;
+const options = [
+  ['es', 'ES', 'Español'],
+  ['en', 'EN', 'English'],
+] as const;
 ---
-<div class="language-switcher no-print" aria-label="Language selector"><a class:list={{ active: lang === 'es' }} href={internalPath(localPath)}>ES</a><span>/</span><a class:list={{ active: lang === 'en' }} href={internalPath(`/en${localPath === '/' ? '' : localPath}`)}>EN</a></div>
-<style>.language-switcher{display:flex;align-items:center;gap:4px;color:var(--muted);font-size:.75rem;font-weight:700}.language-switcher a{padding:2px;color:inherit}.language-switcher a.active{color:var(--blue)}</style>
+
+<nav class="language-switcher" aria-label={ui[lang].nav.languageNav}>
+  {options.map(([code, label, name], i) => (
+    <>
+      {i > 0 && <span aria-hidden="true">/</span>}
+      <a
+        class:list={{ active: lang === code }}
+        href={localizedPath(code, route)}
+        hreflang={code}
+        lang={code}
+        aria-label={name}
+        aria-current={lang === code ? 'true' : undefined}
+      >
+        {label}
+      </a>
+    </>
+  ))}
+</nav>
+
+<style>
+  .language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .language-switcher a {
+    padding: 2px;
+    color: inherit;
+  }
+  .language-switcher a.active {
+    color: var(--blue);
+  }
+</style>

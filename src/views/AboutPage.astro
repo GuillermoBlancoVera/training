@@ -1,0 +1,190 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ui, type Lang } from '../i18n/ui';
+import { internalPath } from '../lib/paths';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<BaseLayout lang={lang} title={t.about.title} description={t.about.lead}>
+  <section class="page-head">
+    <div class="container about-intro">
+      <div>
+        <p class="eyebrow">{t.about.eyebrow}</p>
+        <h1>{t.about.heading}</h1>
+        <p class="lead">{t.about.lead}</p>
+      </div>
+      <img
+        src={internalPath('/images/guillermo-blanco-vera.webp')}
+        alt="Guillermo Blanco Vera"
+        width="480"
+        height="480"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <ol class="evolution">
+        {t.about.evolution.map((step) => (
+          <li>{step}</li>
+        ))}
+      </ol>
+      <div class="timeline">
+        {t.about.timeline.map((item) => (
+          <article class="timeline-item">
+            <p class="eyebrow">{item.dates}</p>
+            <div class="timeline-dot" />
+            <h2>{item.company}</h2>
+            <h3>{item.role}</h3>
+            <p class="muted">{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section earlier">
+    <div class="container">
+      <p class="eyebrow">{t.about.earlierEyebrow}</p>
+      <div class="grid grid-3">
+        {t.about.earlier.map(([title, text]) => (
+          <article>
+            <h3>{title}</h3>
+            <p class="muted">{text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid grid-2">
+      <article class="card">
+        <p class="eyebrow">{t.about.educationEyebrow}</p>
+        {t.about.education.map(([title, place]) => (
+          <>
+            <h3>{title}</h3>
+            <p class="muted">{place}</p>
+          </>
+        ))}
+      </article>
+      <article class="card">
+        <p class="eyebrow">{t.about.certificationsEyebrow}</p>
+        {t.certifications.map(([title, text]) => (
+          <>
+            <h3>{title}</h3>
+            <p class="muted">{text}</p>
+          </>
+        ))}
+      </article>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding: 85px 0 55px;
+    background: #e8f0fc;
+  }
+  .about-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 210px;
+    align-items: center;
+    gap: 70px;
+  }
+  .about-intro img {
+    width: 210px;
+    height: 210px;
+    object-fit: cover;
+    object-position: center 38%;
+    border-radius: 50%;
+    border: 7px solid rgba(255, 255, 255, 0.75);
+    box-shadow: 0 14px 32px rgba(20, 33, 61, 0.14);
+  }
+  .evolution {
+    list-style: none;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    flex-wrap: wrap;
+    background: var(--ink);
+    color: #fff;
+    padding: 22px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .evolution li + li::before {
+    content: '→';
+    color: #85a9f5;
+    margin-right: 11px;
+  }
+  .timeline {
+    max-width: 800px;
+    margin: 70px auto;
+  }
+  .timeline-item {
+    position: relative;
+    padding: 0 0 48px 50px;
+    border-left: 1px solid var(--line);
+  }
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+  .timeline-dot {
+    position: absolute;
+    left: -7px;
+    top: 2px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: 3px solid var(--canvas);
+  }
+  .timeline-item h2 {
+    font-size: 1.8rem;
+    margin-bottom: 4px;
+  }
+  .timeline-item h3 {
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0;
+    font-size: 1rem;
+    margin-bottom: 9px;
+  }
+  .earlier {
+    background: #edf2f8;
+  }
+  .earlier article {
+    padding: 10px;
+  }
+  @media (max-width: 720px) {
+    .page-head {
+      padding: 75px 0 45px;
+    }
+    .about-intro {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .about-intro img {
+      width: 150px;
+      height: 150px;
+      grid-row: 1;
+    }
+    .evolution {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+    .evolution li + li::before {
+      content: '↓';
+      margin-right: 8px;
+    }
+  }
+</style>

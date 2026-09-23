@@ -1,5 +1,35 @@
 ---
-const { lang = 'es' } = Astro.props;
+import { ui, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
 ---
-<footer class="no-print"><div class="container"><strong>Guillermo Blanco Vera</strong><span>{lang === 'en' ? 'Technology training based on real-world experience.' : 'Formación tecnológica basada en experiencia real.'}</span><span>© {new Date().getFullYear()}</span></div></footer>
-<style>footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.88rem}footer div{display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap}footer strong{color:var(--ink)}</style>
+
+<footer>
+  <div class="container">
+    <strong>Guillermo Blanco Vera</strong>
+    <span>{ui[lang].footer.tagline}</span>
+    <span>© {new Date().getFullYear()}</span>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 28px 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+  footer div {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  footer strong {
+    color: var(--ink);
+  }
+</style>

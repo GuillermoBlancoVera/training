@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ui } from '../i18n/ui';
+import { localizedPath } from '../lib/paths';
+
+// GitHub Pages serves a single 404 page for every language, so it shows both.
+const es = ui.es.notFound;
+const en = ui.en.notFound;
+---
+
+<BaseLayout lang="es" title={es.title} noindex>
+  <section class="not-found">
+    <div class="container">
+      <p class="eyebrow">404</p>
+      <h1>{es.heading}</h1>
+      <p class="lead">{es.text}</p>
+      <a class="button" href={localizedPath('es', '/courses')}>
+        {es.button}
+      </a>
+      <div lang="en" class="alt">
+        <h2>{en.heading}</h2>
+        <p class="lead">{en.text}</p>
+        <a class="button secondary" href={localizedPath('en', '/courses')}>
+          {en.button}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding: 110px 0;
+    min-height: 70vh;
+  }
+  .alt {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .alt h2 {
+    font-size: 1.6rem;
+  }
+</style>

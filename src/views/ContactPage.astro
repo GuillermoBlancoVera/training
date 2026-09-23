@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { contact, ui, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang].contact;
+---
+
+<BaseLayout lang={lang} title={t.title} description={t.lead}>
+  <section class="contact">
+    <div class="container">
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h1>{t.heading}</h1>
+      <p class="lead">{t.lead}</p>
+      <div class="contact-grid">
+        <article class="card">
+          <h2>Email</h2>
+          <p>
+            <a class="email" href={`mailto:${contact.email}`}>
+              {contact.email}
+            </a>
+          </p>
+        </article>
+        <article class="card">
+          <h2>LinkedIn</h2>
+          <p class="muted">{t.linkedinText}</p>
+          <a class="button secondary" href={contact.linkedin} target="_blank" rel="noreferrer">
+            {t.linkedinButton}
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact {
+    padding: 120px 0;
+    min-height: 70vh;
+    background: linear-gradient(120deg, #f6f8fb 45%, #e8f0fc);
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 45px;
+    max-width: 850px;
+  }
+  .contact-grid h2 {
+    font-size: 1.18rem;
+    letter-spacing: -0.02em;
+  }
+  .email {
+    color: var(--blue);
+    font-weight: 700;
+    font-size: 1.05rem;
+    overflow-wrap: anywhere;
+  }
+  .contact-grid .button {
+    margin-top: 12px;
+  }
+  @media (max-width: 720px) {
+    .contact {
+      padding: 75px 0;
+    }
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

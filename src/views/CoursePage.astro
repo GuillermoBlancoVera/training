@@ -1,0 +1,172 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CourseCard from '../components/CourseCard.astro';
+import { ui, type Lang } from '../i18n/ui';
+import { formatHours, getCourses, type Course } from '../lib/courses';
+import { localizedPath } from '../lib/paths';
+
+interface Props {
+  lang: Lang;
+  course: Course;
+}
+
+const { lang, course } = Astro.props;
+const t = ui[lang];
+const { Content } = await render(course.entry);
+const related = (await getCourses(lang))
+  .filter((item) => item.data.category === course.data.category && item.id !== course.id)
+  .slice(0, 3);
+---
+
+<BaseLayout lang={lang} title={course.data.title} description={course.data.description}>
+  <section class="course-hero">
+    <div class="container">
+      <a class="back" href={localizedPath(lang, '/courses')}>
+        {t.course.back}
+      </a>
+      <p class="eyebrow">{t.categories[course.data.category]}</p>
+      <h1>{course.data.title}</h1>
+      <p class="lead">{course.data.description}</p>
+      <div class="facts">
+        <span>{t.levels[course.data.level]}</span>
+        <span>{formatHours(course.data.hours, t)}</span>
+        <span>{t.modality}</span>
+      </div>
+      <div class="button-row">
+        <a class="button" href={localizedPath(lang, '/contact')}>
+          {t.course.request}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container course-layout">
+      <div class="prose">
+        <Content />
+      </div>
+      <aside class="card details">
+        <h2>{t.course.details}</h2>
+        <div>
+          <h3>{t.course.audience}</h3>
+          <ul>
+            {course.data.audience.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>{t.course.prerequisites}</h3>
+          <p>{course.data.prerequisites}</p>
+        </div>
+        <div>
+          <h3>{t.course.exercises}</h3>
+          <ul>
+            {course.data.exercises.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>{t.course.adaptation}</h3>
+          <p>{course.data.adaptation}</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="section related">
+      <div class="container">
+        <p class="eyebrow">{t.course.related}</p>
+        <div class="grid grid-3">
+          {related.map((item) => (
+            <CourseCard course={item} lang={lang} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="container callout">
+      <h2>{t.course.ctaHeading}</h2>
+      <p>{t.course.ctaText}</p>
+      <a class="button" href={localizedPath(lang, '/contact')}>
+        {t.course.ctaButton}
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .course-hero {
+    padding: 65px 0;
+    background: #e8f0fc;
+  }
+  .back {
+    display: inline-block;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 38px;
+  }
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 27px;
+  }
+  .facts span {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 7px 10px;
+    font-size: 0.86rem;
+    font-weight: 700;
+  }
+  .course-hero .button-row {
+    margin-top: 28px;
+  }
+  .course-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(290px, 0.8fr);
+    gap: 70px;
+  }
+  .details {
+    height: max-content;
+  }
+  .details h2 {
+    font-size: 1.18rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 22px;
+  }
+  .details div {
+    border-top: 1px solid var(--line);
+    padding: 15px 0;
+  }
+  .details h3 {
+    font-family: inherit;
+    font-size: 1rem;
+    letter-spacing: 0;
+    margin: 0;
+  }
+  .details p,
+  .details ul {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 7px 0 0;
+  }
+  .details ul {
+    padding-left: 18px;
+  }
+  .related {
+    background: #edf2f8;
+  }
+  @media (max-width: 720px) {
+    .course-layout {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+</style>

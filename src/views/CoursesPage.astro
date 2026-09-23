@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CourseCard from '../components/CourseCard.astro';
+import { learningPaths, ui, type Lang } from '../i18n/ui';
+import { getCourses } from '../lib/courses';
+import { localizedPath } from '../lib/paths';
+import { categories } from '../lib/taxonomy';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const courses = await getCourses(lang);
+const paths = learningPaths.map((ids, i) => {
+  const [title, text] = t.catalogue.paths[i];
+  const steps = ids.map((id) => {
+    const course = courses.find((c) => c.id === id);
+    if (!course) throw new Error(`Learning path ${i + 1} references unknown course "${id}".`);
+    return course;
+  });
+  return { title, text, steps };
+});
+---
+
+<BaseLayout lang={lang} title={t.catalogue.title} description={t.catalogue.lead}>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow">{t.catalogue.eyebrow}</p>
+      <h1>{t.catalogue.heading}</h1>
+      <p class="lead">{t.catalogue.lead}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="filters" role="group" aria-label={t.catalogue.filterLabel} hidden>
+        <button type="button" data-filter="all" aria-pressed="true">
+          {t.catalogue.all}
+        </button>
+        {categories.map((category) => (
+          <button type="button" data-filter={category} aria-pressed="false">
+            {t.categories[category]}
+          </button>
+        ))}
+      </div>
+      {categories.map((category) => (
+        <section class="course-group" data-category={category}>
+          <h2 class="eyebrow">{t.categories[category]}</h2>
+          <div class="grid grid-3">
+            {courses
+              .filter((course) => course.data.category === category)
+              .map((course) => (
+                <CourseCard course={course} lang={lang} />
+              ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </section>
+
+  <section class="learning-paths section">
+    <div class="container">
+      <p class="eyebrow">{t.catalogue.pathsEyebrow}</p>
+      <h2>{t.catalogue.pathsHeading}</h2>
+      <div class="grid grid-3">
+        {paths.map((path) => (
+          <article class="card">
+            <h3>{path.title}</h3>
+            <p class="muted">{path.text}</p>
+            <ol class="path-courses">
+              {path.steps.map((course) => (
+                <li>
+                  <a href={localizedPath(lang, `/courses/${course.id}`)}>{course.data.title}</a>
+                </li>
+              ))}
+            </ol>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const filters = document.querySelector<HTMLElement>('.filters');
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const groups = document.querySelectorAll<HTMLElement>('.course-group');
+  if (filters) filters.hidden = false;
+  buttons.forEach((button) =>
+    button.addEventListener('click', () => {
+      const filter = button.dataset.filter;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+      groups.forEach((group) => (group.hidden = filter !== 'all' && group.dataset.category !== filter));
+    }),
+  );
+</script>
+
+<style>
+  .page-head {
+    padding: 100px 0 55px;
+    background: #e8f0fc;
+  }
+  .filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 46px;
+  }
+  .filters[hidden] {
+    display: none;
+  }
+  .filters button {
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    padding: 8px 12px;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .filters button[aria-pressed='true'] {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .course-group {
+    margin-bottom: 70px;
+  }
+  .course-group[hidden] {
+    display: none;
+  }
+  .course-group > .eyebrow {
+    font-family: inherit;
+    font-size: 0.78rem;
+    letter-spacing: 0.11em;
+    line-height: 1.6;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+  }
+  .learning-paths {
+    background: #edf2f8;
+  }
+  .learning-paths h2 {
+    margin-bottom: 32px;
+  }
+  .learning-paths .card {
+    display: flex;
+    flex-direction: column;
+  }
+  .path-courses {
+    counter-reset: step;
+    list-style: none;
+    margin: auto 0 0;
+    padding: 12px 0 0;
+    display: grid;
+    gap: 8px;
+  }
+  .path-courses li {
+    counter-increment: step;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .path-courses li::before {
+    content: counter(step);
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-size: 0.75rem;
+  }
+  .path-courses a {
+    flex: 1;
+    padding: 8px 10px;
+    background: #fff;
+    border: 1px solid #d4dfec;
+    border-radius: 7px;
+    color: var(--blue);
+  }
+  .path-courses a:hover {
+    border-color: var(--blue);
+  }
+</style>

@@ -1,12 +1,17 @@
 import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 
-const repository = process.env.GITHUB_REPOSITORY?.split('/')[1];
-const owner = process.env.GITHUB_REPOSITORY?.split('/')[0];
+// GitHub Actions supplies GITHUB_REPOSITORY (owner/repo). Local development stays at '/'.
+const [owner = 'guillermoblancovera', repository] = process.env.GITHUB_REPOSITORY?.split('/') ?? [];
 
 export default defineConfig({
-  integrations: [mdx()],
-  // GitHub Actions supplies these variables. Local development stays at '/'.
+  site: `https://${owner.toLowerCase()}.github.io`,
   base: repository ? `/${repository}` : undefined,
-  site: owner ? `https://${owner}.github.io` : undefined,
+  trailingSlash: 'always',
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/404'),
+      i18n: { defaultLocale: 'es', locales: { es: 'es', en: 'en' } },
+    }),
+  ],
 });
