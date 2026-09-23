@@ -5,6 +5,7 @@ import CourseCard from '../components/CourseCard.astro';
 import { ui, type Lang } from '../i18n/ui';
 import { formatHours, getCourses, type Course } from '../lib/courses';
 import { localizedPath } from '../lib/paths';
+import { course as courseData } from '../lib/structured-data';
 
 interface Props {
   lang: Lang;
@@ -19,7 +20,12 @@ const related = (await getCourses(lang))
   .slice(0, 3);
 ---
 
-<BaseLayout lang={lang} title={course.data.title} description={course.data.description}>
+<BaseLayout
+  lang={lang}
+  title={course.data.title}
+  description={course.data.description}
+  structuredData={[courseData(lang, course, Astro.site)]}
+>
   <section class="course-hero">
     <div class="container">
       <a class="back" href={localizedPath(lang, '/courses')}>
@@ -103,7 +109,7 @@ const related = (await getCourses(lang))
 <style>
   .course-hero {
     padding: 65px 0;
-    background: #e8f0fc;
+    background: var(--surface-strong);
   }
   .back {
     display: inline-block;
@@ -118,7 +124,7 @@ const related = (await getCourses(lang))
     margin-top: 27px;
   }
   .facts span {
-    background: #fff;
+    background: var(--paper);
     border: 1px solid var(--line);
     border-radius: 7px;
     padding: 7px 10px;
@@ -161,7 +167,7 @@ const related = (await getCourses(lang))
     padding-left: 18px;
   }
   .related {
-    background: #edf2f8;
+    background: var(--surface);
   }
   @media (max-width: 720px) {
     .course-layout {

@@ -6,7 +6,18 @@
   --canvas: #f6f8fb;
   --blue: #2455d6;
   --blue-dark: #183fa8;
+  --blue-soft: #85a9f5;
+  --surface: #edf2f8;
+  --surface-strong: #e8f0fc;
+  --line-strong: #d4dfec;
+  --tag-ink: #334867;
+  --on-ink-muted: #cfd9eb;
+  --header-bg: rgba(246, 248, 251, 0.88);
+  --shadow: 0 14px 32px rgba(20, 33, 61, 0.14);
+  --hero-gradient: linear-gradient(120deg, var(--canvas) 45%, var(--surface-strong));
   --radius: 18px;
+  --font-body: 'DM Sans Variable', system-ui, sans-serif;
+  --font-heading: 'Manrope Variable', 'DM Sans Variable', system-ui, sans-serif;
 }
 * {
   box-sizing: border-box;
@@ -18,7 +29,7 @@ body {
   margin: 0;
   color: var(--ink);
   background: var(--canvas);
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   line-height: 1.6;
 }
 h1,
@@ -30,7 +41,7 @@ p {
 h1,
 h2,
 h3 {
-  font-family: Manrope, 'DM Sans', sans-serif;
+  font-family: var(--font-heading);
   line-height: 1.12;
   letter-spacing: -0.04em;
 }
@@ -84,7 +95,7 @@ a {
   padding: 13px 20px;
   border-radius: 9px;
   background: var(--blue);
-  color: #fff;
+  color: var(--paper);
   font: inherit;
   font-weight: 700;
   transition: 0.2s;
@@ -101,7 +112,7 @@ a {
   border-color: var(--line);
 }
 .button.secondary:hover {
-  background: #fff;
+  background: var(--paper);
   color: var(--blue);
 }
 .button-row {
@@ -117,8 +128,8 @@ a {
 }
 .tag {
   display: inline-block;
-  color: #334867;
-  background: #edf2f8;
+  color: var(--tag-ink);
+  background: var(--surface);
   border-radius: 99px;
   padding: 3px 10px;
   font-size: 0.78rem;
@@ -168,12 +179,12 @@ a {
 }
 .callout {
   background: var(--ink);
-  color: white;
+  color: var(--paper);
   border-radius: var(--radius);
   padding: clamp(30px, 6vw, 62px);
 }
 .callout p {
-  color: #cfd9eb;
+  color: var(--on-ink-muted);
   max-width: 650px;
 }
 @media (max-width: 960px) {

@@ -100,7 +100,7 @@ const paths = learningPaths.map((ids, i) => {
 <style>
   .page-head {
     padding: 100px 0 55px;
-    background: #e8f0fc;
+    background: var(--surface-strong);
   }
   .filters {
     display: flex;
@@ -112,7 +112,7 @@ const paths = learningPaths.map((ids, i) => {
     display: none;
   }
   .filters button {
-    background: #fff;
+    background: var(--paper);
     border: 1px solid var(--line);
     color: var(--muted);
     padding: 8px 12px;
@@ -124,7 +124,7 @@ const paths = learningPaths.map((ids, i) => {
   }
   .filters button[aria-pressed='true'] {
     background: var(--ink);
-    color: #fff;
+    color: var(--paper);
     border-color: var(--ink);
   }
   .course-group {
@@ -142,7 +142,7 @@ const paths = learningPaths.map((ids, i) => {
     padding-bottom: 12px;
   }
   .learning-paths {
-    background: #edf2f8;
+    background: var(--surface);
   }
   .learning-paths h2 {
     margin-bottom: 32px;
@@ -177,14 +177,14 @@ const paths = learningPaths.map((ids, i) => {
     height: 24px;
     border-radius: 50%;
     background: var(--blue);
-    color: #fff;
+    color: var(--paper);
     font-size: 0.75rem;
   }
   .path-courses a {
     flex: 1;
     padding: 8px 10px;
-    background: #fff;
-    border: 1px solid #d4dfec;
+    background: var(--paper);
+    border: 1px solid var(--line-strong);
     border-radius: 7px;
     color: var(--blue);
   }
