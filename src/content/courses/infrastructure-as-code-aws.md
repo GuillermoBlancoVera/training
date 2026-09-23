@@ -1,10 +1,10 @@
 ---
 title: Infrastructure as Code en AWS
 description: Cómo definir, versionar y desplegar infraestructura Cloud de forma repetible con AWS CDK.
-category: cloud
+track: technical
 level: intermediate
 hours: [4, 6]
-order: 5
+order: 13
 featured: false
 tags: [AWS CDK, CI/CD, IaC]
 audience: [Desarrolladores, Equipos DevOps, Perfiles Cloud]

@@ -1,11 +1,11 @@
 ---
 title: 'AWS práctico: construyendo una aplicación Cloud'
 description: Construcción guiada de una aplicación pequeña, segura y observable con servicios gestionados de AWS.
-category: cloud
+track: technical
 level: beginner-intermediate
 hours: [6, 8]
-order: 3
-featured: true
+order: 11
+featured: false
 tags: [Lambda, DynamoDB, IaC]
 audience: [Desarrolladores, Perfiles técnicos con base en AWS, Equipos de producto técnico]
 prerequisites: Conocimientos básicos de programación y nociones de AWS.

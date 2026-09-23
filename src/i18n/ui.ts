@@ -1,4 +1,4 @@
-import type { Category, Level } from '../lib/taxonomy';
+import type { Level, Track } from '../lib/taxonomy';
 
 export const languages = ['es', 'en'] as const;
 export type Lang = (typeof languages)[number];
@@ -16,7 +16,8 @@ const es = {
   meta: {
     siteName: 'Guillermo Blanco Vera',
     title: 'Guillermo Blanco Vera | Formación tecnológica',
-    description: 'Cloud, AWS, programación e Inteligencia Artificial explicados desde la experiencia práctica.',
+    description:
+      'Formación en Inteligencia Artificial y Cloud (AWS) para empresas y academias: cursos para equipos técnicos y para cualquier profesional.',
   },
   nav: {
     home: 'Inicio',
@@ -29,10 +30,16 @@ const es = {
     languageNav: 'Idioma',
   },
   footer: { tagline: 'Formación tecnológica basada en experiencia real.' },
-  categories: { cloud: 'Cloud & AWS', programming: 'Programación', ai: 'Inteligencia Artificial' } satisfies Record<
-    Category,
-    string
-  >,
+  tracks: {
+    business: {
+      name: 'Para todos los equipos',
+      text: 'Sin conocimientos técnicos. IA generativa y Cloud aplicados al día a día de cada área: RRHH, retail, negocio, marketing…',
+    },
+    technical: {
+      name: 'Para equipos técnicos',
+      text: 'Para desarrolladores y perfiles Cloud: arquitecturas en AWS, IA en aplicaciones y buenas prácticas para producción.',
+    },
+  } satisfies Record<Track, { name: string; text: string }>,
   levels: {
     beginner: 'Inicial',
     'beginner-intermediate': 'Inicial / Intermedio',
@@ -43,18 +50,13 @@ const es = {
   courseCard: { more: 'Ver ficha' },
   home: {
     heading: 'Formación tecnológica para empresas y profesionales.',
-    lead: 'Cloud, AWS, programación e Inteligencia Artificial explicados desde la experiencia práctica.',
+    lead: 'Inteligencia Artificial y Cloud explicados desde la experiencia práctica, para equipos técnicos y para cualquier profesional.',
     viewCourses: 'Ver cursos',
     viewExperience: 'Conocer mi experiencia',
     highlights: ['Senior Software Engineer', 'AWS · Backend · IA', '+10 años de experiencia'],
-    areasEyebrow: 'Áreas de formación',
-    areasHeading: 'Conceptos claros. Aplicación real.',
-    areas: {
-      cloud:
-        'Arquitecturas, servicios, seguridad, costes e infraestructura como código para comprender y construir en la nube.',
-      programming: 'Fundamentos y herramientas prácticas para automatizar, entender sistemas y desarrollar software.',
-      ai: 'Desde las bases de IA hasta aplicaciones generativas, LLM y servicios de AWS.',
-    } satisfies Record<Category, string>,
+    tracksEyebrow: 'Para quién',
+    tracksHeading: 'Conceptos claros. Aplicación real.',
+    tracksLink: 'Ver cursos →',
     featuredEyebrow: 'Cursos destacados',
     featuredHeading: 'Formación que se adapta al contexto.',
     fullCatalogue: 'Ver catálogo completo',
@@ -81,14 +83,19 @@ const es = {
     eyebrow: 'Catálogo de formación',
     heading: 'Cursos para entender, decidir y construir mejor.',
     lead: 'Sesiones claras y prácticas para empresas y profesionales. Cada formación puede adaptarse al nivel, tiempo y objetivos del equipo.',
-    filterLabel: 'Filtrar por área',
+    filterLabel: 'Filtrar por público',
     all: 'Todos',
     pathsEyebrow: 'Itinerarios de aprendizaje',
     pathsHeading: 'Recorridos conectados para avanzar con sentido.',
+    pathOr: 'o',
     paths: [
+      ['IA en tu equipo', 'Empieza por lo esencial y continúa con la versión de tu sector.'],
       ['Cloud & AWS esencial', 'Para entender Cloud y establecer una base práctica en AWS.'],
       ['Construir en AWS', 'Para equipos que ya conocen lo básico y necesitan diseñar sistemas mantenibles.'],
-      ['IA aplicada', 'Para comprender la IA generativa y llevarla a productos y procesos.'],
+      [
+        'IA en AWS',
+        'Para equipos técnicos que quieren incorporar IA a sus aplicaciones, de los servicios listos para usar a la IA generativa.',
+      ],
     ] satisfies Entry[],
   },
   course: {
@@ -180,7 +187,8 @@ const en: UI = {
   meta: {
     siteName: 'Guillermo Blanco Vera',
     title: 'Guillermo Blanco Vera | Technology training',
-    description: 'Cloud, AWS, programming and Artificial Intelligence explained through practical experience.',
+    description:
+      'Artificial Intelligence and Cloud (AWS) training for companies and training providers: courses for technical teams and for every professional.',
   },
   nav: {
     home: 'Home',
@@ -193,24 +201,29 @@ const en: UI = {
     languageNav: 'Language',
   },
   footer: { tagline: 'Technology training based on real-world experience.' },
-  categories: { cloud: 'Cloud & AWS', programming: 'Programming', ai: 'Artificial Intelligence' },
+  tracks: {
+    business: {
+      name: 'For every team',
+      text: "No technical background needed. Generative AI and Cloud applied to each area's daily work: HR, retail, business, marketing…",
+    },
+    technical: {
+      name: 'For technical teams',
+      text: 'For developers and Cloud profiles: AWS architectures, AI in applications and production-ready practices.',
+    },
+  },
   levels: { beginner: 'Beginner', 'beginner-intermediate': 'Beginner / Intermediate', intermediate: 'Intermediate' },
   hours: (hours) => `${hours} hours`,
   modality: 'On-site, online or hybrid',
   courseCard: { more: 'View course' },
   home: {
     heading: 'Technology training for companies and professionals.',
-    lead: 'Cloud, AWS, programming and Artificial Intelligence explained through practical experience.',
+    lead: 'Artificial Intelligence and Cloud explained through practical experience, for technical teams and for every professional.',
     viewCourses: 'View courses',
     viewExperience: 'Explore my experience',
     highlights: ['Senior Software Engineer', 'AWS · Backend · AI', '10+ years of experience'],
-    areasEyebrow: 'Training areas',
-    areasHeading: 'Clear concepts. Real-world application.',
-    areas: {
-      cloud: 'Architectures, services, security, cost and infrastructure as code to understand and build in the cloud.',
-      programming: 'Practical foundations and tools for automation, understanding systems and developing software.',
-      ai: 'From AI foundations to generative applications, LLMs and AWS services.',
-    },
+    tracksEyebrow: 'Who it is for',
+    tracksHeading: 'Clear concepts. Real-world application.',
+    tracksLink: 'View courses →',
     featuredEyebrow: 'Featured courses',
     featuredHeading: 'Training that adapts to the context.',
     fullCatalogue: 'View full catalogue',
@@ -234,14 +247,19 @@ const en: UI = {
     eyebrow: 'Training catalogue',
     heading: 'Courses to understand, decide and build better.',
     lead: "Clear, practical sessions for companies and professionals. Every course can be adapted to the team's level, time and goals.",
-    filterLabel: 'Filter by area',
+    filterLabel: 'Filter by audience',
     all: 'All',
     pathsEyebrow: 'Learning paths',
     pathsHeading: 'Connected routes to progress with purpose.',
+    pathOr: 'or',
     paths: [
+      ['AI in your team', 'Start with the essentials, then continue with the version for your sector.'],
       ['Cloud & AWS essentials', 'Understand Cloud and build a practical foundation in AWS.'],
       ['Building on AWS', 'For teams who know the basics and need to design maintainable systems.'],
-      ['Applied AI', 'Understand Generative AI and bring it into products and processes.'],
+      [
+        'AI on AWS',
+        'For technical teams adding AI to their applications, from ready-to-use services to generative AI.',
+      ],
     ],
   },
   course: {
@@ -331,9 +349,13 @@ export const contact = {
   linkedin: 'https://www.linkedin.com/in/guillermo-blanco-vera/',
 };
 
-/** Learning paths: course ids in the recommended order. Titles come from the courses themselves. */
-export const learningPaths: string[][] = [
+/**
+ * Learning paths: course ids in the recommended order, matching `catalogue.paths`.
+ * A step can list alternatives (e.g. one course per sector). Titles come from the courses themselves.
+ */
+export const learningPaths: (string | string[])[][] = [
+  ['ia-en-el-trabajo', ['ia-recursos-humanos', 'ia-retail']],
   ['cloud-computing-profesionales', 'introduccion-aws', 'aws-aplicacion-cloud'],
   ['aws-aplicacion-cloud', 'serverless-aws', 'infrastructure-as-code-aws'],
-  ['ia-profesionales', 'genai-aws', 'desarrollo-aplicaciones-genai'],
+  ['ia-preentrenada-aws', 'genai-aws', 'desarrollo-aplicaciones-genai'],
 ];

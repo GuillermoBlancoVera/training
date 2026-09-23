@@ -1,10 +1,10 @@
 ---
 title: Introducción a AWS
 description: Los servicios y conceptos esenciales de AWS para entender y empezar a construir en la nube.
-category: cloud
+track: technical
 level: beginner
 hours: 4
-order: 2
+order: 10
 featured: true
 tags: [AWS, Cloud, IAM]
 audience: [Perfiles técnicos junior, Analistas y consultores, Equipos que comienzan con AWS]
